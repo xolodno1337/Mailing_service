@@ -70,7 +70,7 @@ class MailingAttempt(models.Model):  # Попытка рассылки
         ('failed', 'Не успешно'),
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, verbose_name='Статус попытки')
-    response = models.TextField(blank=True, null=True, verbose_name='Ответ почтового сервера')
+    response = models.TextField(verbose_name='Ответ почтового сервера', **NULLABLE)
 
     def __str__(self):
         return f"{self.mailing} - Попытка: {self.attempt_datetime} - Статус: {self.status}"
