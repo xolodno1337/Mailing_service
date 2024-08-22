@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -19,6 +20,7 @@ class Client(models.Model):  # Клиенты сервиса — это те, к
                               help_text='Укажите свой Email')
     full_name = models.CharField(max_length=255, verbose_name='Ф.И.О.', help_text='Укажите свои Ф.И.О.')
     comment = models.TextField(verbose_name='Комментарий', help_text='Оставьте комментарий', **NULLABLE)
+    owner = models.ForeignKey(User, verbose_name='Владелец', on_delete=models.SET_NULL, **NULLABLE)
 
     def __str__(self):
         return self.full_name
@@ -32,6 +34,7 @@ class Message(models.Model):  # Сообщение для рассылки
     subject_message = models.CharField(max_length=150, verbose_name='Тема сообщения',
                                        help_text='Укажите тему сообщения')
     content = models.TextField(verbose_name='Содержимое сообщения', help_text='Укажите содержимое сообщения')
+    owner = models.ForeignKey(User, verbose_name='Владелец', on_delete=models.SET_NULL, **NULLABLE)
 
     def __str__(self):
         return self.subject_message
@@ -51,6 +54,7 @@ class Mailing(models.Model):  # Рассылка
                               default='created')
     clients = models.ManyToManyField(Client, verbose_name='Клиенты', help_text='Выберите клиентов для рассылки')
     message = models.OneToOneField(Message, on_delete=models.CASCADE, verbose_name='Сообщение', **NULLABLE)
+    owner = models.ForeignKey(User, verbose_name='Владелец', on_delete=models.SET_NULL, **NULLABLE)
 
     def __str__(self):
         return self.name_mailing
