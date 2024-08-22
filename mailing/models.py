@@ -28,7 +28,20 @@ class Client(models.Model):  # Клиенты сервиса — это те, к
         verbose_name_plural = 'Клиенты'
 
 
-class Mailing(models.Model):   # Рассылка
+class Message(models.Model):  # Сообщение для рассылки
+    subject_message = models.CharField(max_length=150, verbose_name='Тема сообщения',
+                                       help_text='Укажите тему сообщения')
+    content = models.TextField(verbose_name='Содержимое сообщения', help_text='Укажите содержимое сообщения')
+
+    def __str__(self):
+        return self.subject_message
+
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
+
+
+class Mailing(models.Model):  # Рассылка
     name_mailing = models.CharField(max_length=50, verbose_name='Название рассылки',
                                     help_text='Укажите название рассылки', **NULLABLE)
     first_send_datetime = models.DateTimeField(verbose_name='Дата и время первой отправки рассылки')
@@ -45,3 +58,23 @@ class Mailing(models.Model):   # Рассылка
     class Meta:
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
+
+
+class MailingAttempt(models.Model):  # Попытка рассылки
+    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, related_name='attempts',
+                                verbose_name='Рассылка')
+    attempt_datetime = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время попытки рассылки')
+
+    STATUS_CHOICES = [
+        ('success', 'Успешно'),
+        ('failed', 'Не успешно'),
+    ]
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, verbose_name='Статус попытки')
+    response = models.TextField(blank=True, null=True, verbose_name='Ответ почтового сервера')
+
+    def __str__(self):
+        return f"{self.mailing} - Попытка: {self.attempt_datetime} - Статус: {self.status}"
+
+    class Meta:
+        verbose_name = 'Попытка рассылки'
+        verbose_name_plural = 'Попытки рассылки'
