@@ -38,32 +38,32 @@
 <!-- Контент -->
 <div class="container">
     <div class="col-12 md-5">
-    </div>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for mailing in object_list %}
-        <div class="col">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <p class="card-text">Список клиентов: {{ mailing.clients }}</p>
-                    <a class="btn btn-primary btn-lg" href="#" role="button">Подробнее</a>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for mailing in object_list %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">Список клиентов: {{ mailing.clients }}</p>
+                        <a class="btn btn-primary btn-lg" href="#" role="button">Подробнее</a>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </div>
 
-<!-- Футер -->
-<footer class="text-center bg-light py-4">
-    <p>&copy; <span id="currentYear"></span> Мой Сервис. Все права защищены.</p>
-</footer>
-<script>
-    const currentYear = new Date().getFullYear();
-    document.getElementById('currentYear').textContent = currentYear;
-</script>
+    <!-- Футер -->
+    <footer class="text-center bg-light py-4">
+        <p>&copy; <span id="currentYear"></span> Мой Сервис. Все права защищены.</p>
+    </footer>
+    <script>
+        const currentYear = new Date().getFullYear();
+        document.getElementById('currentYear').textContent = currentYear;
+    </script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.10/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.10/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

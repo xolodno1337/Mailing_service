@@ -1,0 +1,22 @@
+{% block content %}
+<form class="row" method="post" enctype="multipart/form-data">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                {% csrf_token %}
+                {{ form.as_p}}
+                <button type="submit" class="btn btn-primary">
+                    {% if object %}
+                    Сохранить
+                    {% else %}
+                    Создать
+                    {% endif %}
+                </button>
+                <a class="btn btn-secondary" href="{% url 'mailing:mailing_list' %}"
+                   class="btn btn-primary">Отмена<a>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
