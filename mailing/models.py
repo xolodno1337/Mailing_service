@@ -1,17 +1,19 @@
 from django.db import models
+from django.utils import timezone
+
 from users.models import User
 
 NULLABLE = {'blank': True, 'null': True}
 
 periodicity_choices = [  # Периодичность рассылки
-    ('daily', 'Раз в день'),
-    ('weekly', 'Раз в неделю'),
-    ('monthly', 'Раз в месяц'),
+    ('Раз в день', 'Раз в день'),
+    ('Раз в неделю', 'Раз в неделю'),
+    ('Раз в месяц', 'Раз в месяц'),
 ]
 status_choices = [  # Статус рассылки
-    ('created', 'Создана'),
-    ('running', 'Запущена'),
-    ('completed', 'Завершена'),
+    ('Создана', 'Создана'),
+    ('Запущена', 'Запущена'),
+    ('Завершена', 'Завершена'),
 ]
 
 
@@ -23,7 +25,7 @@ class Client(models.Model):  # Клиенты сервиса — это те, к
     owner = models.ForeignKey(User, verbose_name='Владелец', on_delete=models.SET_NULL, **NULLABLE)
 
     def __str__(self):
-        return self.full_name
+        return self.email
 
     class Meta:
         verbose_name = 'Клиент'
@@ -47,8 +49,9 @@ class Message(models.Model):  # Сообщение для рассылки
 class Mailing(models.Model):  # Рассылка
     name_mailing = models.CharField(max_length=50, verbose_name='Название рассылки',
                                     help_text='Укажите название рассылки', **NULLABLE)
-    first_send_datetime = models.DateTimeField(verbose_name='Дата и время первой отправки рассылки')
-    periodicity = models.CharField(max_length=10, choices=periodicity_choices, verbose_name='Периодичность рассылки',
+    first_send_datetime = models.DateTimeField(default=timezone.now,
+                                               verbose_name='Дата и время первой отправки рассылки')
+    periodicity = models.CharField(max_length=20, choices=periodicity_choices, verbose_name='Периодичность рассылки',
                                    default='daily', help_text='Выберите периодичность рассылки')
     status = models.CharField(max_length=10, choices=status_choices, verbose_name='Статус рассылки',
                               default='created')

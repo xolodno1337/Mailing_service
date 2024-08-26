@@ -1,0 +1,18 @@
+{% block content %}
+<div class="col-12">
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <p>Хотите удалить клиента "{{ object.email }}" ?</p>
+                        <button type="submit" class="btn btn-primary">Подтвердить</button>
+                        <a class="btn btn-primary" href="{% url 'mailing:client_list' %}">Отмена</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

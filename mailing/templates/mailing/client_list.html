@@ -12,20 +12,20 @@
 
 <!-- Заголовок -->
 <header class="jumbotron text-center">
-    <h1 class="display-7">Список рассылок:</h1>
-    <a class="btn btn-primary" href="{% url 'mailing:mailing_create' %}">Добавить рассылку</a>
+    <h1 class="display-7">Список клиентов:</h1>
+    <a class="btn btn-primary" href="{% url 'mailing:client_create' %}">Добавить клиента</a>
 </header>
 
 <!-- Контент -->
 <div class="container">
     <div class="col-12 md-5">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for mailing in object_list %}
+            {% for client in object_list %}
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <p class="card-text">Рассылка: {{ mailing.name_mailing }}</p>
-                        <a class="btn btn-primary btn-lg" href="{% url 'mailing:mailing_detail' mailing.pk %}"
+                        <p class="card-text">Email клиента: {{ client.email }}</p>
+                        <a class="btn btn-primary btn-lg" href="{% url 'mailing:client_detail' client.pk %}"
                            role="button">Подробнее</a>
                     </div>
                 </div>
