@@ -12,7 +12,7 @@
 
 <!-- Заголовок -->
 <header class="jumbotron text-center">
-    <h1 class="display-7">Сервис рассылок</h1>
+    <h1 class="display-7">Список рассылок:</h1>
     <a class="btn btn-primary" href="{% url 'mailing:mailing_create' %}">Добавить рассылку</a>
 </header>
 
@@ -24,8 +24,9 @@
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <p class="card-text">Список клиентов: {{ mailing.clients }}</p>
-                        <a class="btn btn-primary btn-lg" href="#" role="button">Подробнее</a>
+                        <p class="card-text">Рассылка: {{ mailing.name_mailing }}</p>
+                        <a class="btn btn-primary btn-lg" href="{% url 'mailing:mailing_detail' mailing.pk %}"
+                           role="button">Подробнее</a>
                     </div>
                 </div>
             </div>
