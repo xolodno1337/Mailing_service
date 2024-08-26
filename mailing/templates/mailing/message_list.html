@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сервис рассылок</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+{% include 'mailing/includes/navbar.html' %}
+
+<!-- Заголовок -->
+<header class="jumbotron text-center">
+    <h1 class="display-7">Список сообщений:</h1>
+    <a class="btn btn-primary" href="{% url 'mailing:message_create' %}">Добавить сообщение</a>
+</header>
+
+<!-- Контент -->
+<div class="container">
+    <div class="col-12 md-5">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for message in object_list %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">Список сообщений: {{ message.subject_message }}</p>
+                        <a class="btn btn-primary btn-lg" href="{% url 'mailing:message_detail' message.pk %}" role="button">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% include 'mailing/includes/footer.html' %}
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.10/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
