@@ -76,7 +76,7 @@ class MailingAttempt(models.Model):  # Попытка рассылки
         ('success', 'Успешно'),
         ('failed', 'Не успешно'),
     ]
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, verbose_name='Статус попытки')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name='Статус попытки')
     response = models.TextField(verbose_name='Ответ почтового сервера', **NULLABLE)
 
     def __str__(self):
