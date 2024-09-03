@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from mailing.forms import MailingForm, MessageForm, ClientForm
-from mailing.models import Mailing, Message, Client
+from mailing.models import Mailing, Message, Client, MailingAttempt
 
 
 def home(request):
@@ -91,3 +91,8 @@ class ClientCreateView(CreateView):
 class ClientDeleteView(DeleteView):
     model = Client
     success_url = reverse_lazy('mailing:client_list')
+
+
+def mailing_attempt_report(request):
+    attempts = MailingAttempt.objects.all().order_by('-first_send_datetime')
+    return render(request, 'mailing/report.html', {'attempts': attempts})
