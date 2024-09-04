@@ -16,7 +16,13 @@ class StyleFormMixin:
 class MailingForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Mailing
-        fields = '__all__'
+        exclude = ('owner',)
+
+
+class MailingManagerForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Mailing
+        fields = ('is_active', 'owner',)
 
 
 class MessageForm(StyleFormMixin, ModelForm):
