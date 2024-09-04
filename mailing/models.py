@@ -62,6 +62,7 @@ class Mailing(models.Model):  # Рассылка
     clients = models.ManyToManyField(Client, verbose_name='Клиенты', help_text='Выберите клиентов для рассылки')
     message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='Сообщение', **NULLABLE)
     owner = models.ForeignKey(User, verbose_name='Владелец', on_delete=models.SET_NULL, **NULLABLE)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name_mailing
@@ -69,6 +70,12 @@ class Mailing(models.Model):  # Рассылка
     class Meta:
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
+        permissions = [
+            ('can_view_mailing', 'Can view mailing'),
+            ('can_view_users', 'Can view users'),
+            ('can_block_users', 'Can block users'),
+            ('can_block_mailing', 'Can block mailing')
+        ]
 
 
 class MailingAttempt(models.Model):  # Попытка рассылки

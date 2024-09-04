@@ -21,6 +21,14 @@
             <p class="card-text">Статус рассылки: {{ object.status }}</p>
             <p class="card-text">Клиенты: {{ object.clients.all|join:", " }}</p>
             <p class="card-text">Сообщение: {{ object.message }}</p>
+            <p class="card-text">
+                Активно:
+                {% if object.is_active %}
+                <span class="text-success">&#10004;</span>  <!-- ✅ (галочка) -->
+                {% else %}
+                <span class="text-danger">&#10008;</span>  <!-- ❌ (крестик) -->
+                {% endif %}
+            </p>
 
             <div class="d-flex justify-content-between">
                 <a href="{% url 'mailing:mailing_update' object.pk %}" class="btn btn-warning">Изменить</a>
