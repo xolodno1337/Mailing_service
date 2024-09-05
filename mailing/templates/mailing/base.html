@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сервис рассылок</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+
+{% include 'mailing/includes/navbar.html' %}
+
+
+<!-- Информация о сервисе -->
+<div class="container">
+    <h2>Ваша статистика:</h2>
+    <ul class="list-group mb-4">
+        <li class="list-group-item">Всего рассылок: <strong>{{ total_mailings }}</strong></li>
+        <li class="list-group-item">Активных рассылок: <strong>{{ active_mailings }}</strong></li>
+        <li class="list-group-item">Уникальных клиентов: <strong>{{ unique_clients }}</strong></li>
+    </ul>
+
+    <h2>Свежие статьи из блога:</h2>
+<ul class="list-group">
+    {% for blog in random_blog %}
+    <li class="list-group-item">
+        <a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a>
+        <p class="mb-0">{{ blog.summary }}</p>
+    </li>
+    {% empty %}
+    <li class="list-group-item">Нет доступных статей.</li>
+    {% endfor %}
+</ul>
+</div>
+
+{% include 'mailing/includes/footer.html' %}
+
+<script src="{% static 'js/slim.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
