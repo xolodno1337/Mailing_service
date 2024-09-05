@@ -1,22 +1,26 @@
+{% load static %}
 {% block content %}
-<form class="row" method="post" enctype="multipart/form-data">
-    <div class="col-4">
-        <div class="card">
-            <div class="card-body">
-                {% csrf_token %}
-                {{ form.as_p}}
-                <button type="submit" class="btn btn-primary">
-                    {% if object %}
-                    Сохранить
-                    {% else %}
-                    Создать
-                    {% endif %}
-                </button>
-                <a class="btn btn-secondary" href="{% url 'mailing:message_list' %}"
-                   class="btn btn-primary">Отмена<a>
+<div class="container mt-5">
+    <h2 class="text-center">{% if object %}Редактирование{% else %}Создание{% endif %} сообщения</h2>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <form class="row" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="col-md-8 offset-md-2">
+            <div class="card border-primary">
+                <div class="card-header">
+                    <h5 class="mb-0 text-center">{% if object %}Редактировать сообщение{% else %}Новое сообщение{% endif %}</h5>
+                </div>
+                <div class="card-body">
+                    {{ form.as_p }}
+                </div>
+                <div class="card-footer text-right">
+                    <button type="submit" class="btn btn-primary">
+                        {% if object %}Сохранить{% else %}Создать{% endif %}
+                    </button>
+                    <a href="{% url 'mailing:message_list' %}" class="btn btn-secondary">Отмена</a>
+                </div>
             </div>
         </div>
-    </div>
-</form>
-
+    </form>
+</div>
 {% endblock %}
