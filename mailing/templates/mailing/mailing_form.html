@@ -1,22 +1,35 @@
 {% block content %}
-<form class="row" method="post" enctype="multipart/form-data">
-    <div class="col-4">
-        <div class="card">
-            <div class="card-body">
-                {% csrf_token %}
-                {{ form.as_p}}
-                <button type="submit" class="btn btn-primary">
-                    {% if object %}
-                    Сохранить
-                    {% else %}
-                    Создать
-                    {% endif %}
-                </button>
-                <a class="btn btn-secondary" href="{% url 'mailing:mailing_list' %}"
-                   class="btn btn-primary">Отмена<a>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h5>
+                        {% if object %}
+                        Редактирование
+                        {% else %}
+                        Создание
+                        {% endif %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="d-flex justify-content-between mt-3">
+                            <button type="submit" class="btn btn-primary">
+                                {% if object %}
+                                Сохранить
+                                {% else %}
+                                Создать
+                                {% endif %}
+                            </button>
+                            <a class="btn btn-secondary" href="{% url 'mailing:mailing_list' %}">Отмена</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</form>
-
+</div>
 {% endblock %}
