@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 from users.models import User
 
 NULLABLE = {'blank': True, 'null': True}
@@ -12,6 +14,9 @@ class Blog(models.Model):
     views_count = models.IntegerField(default=0, verbose_name='Количество просмотров')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания', **NULLABLE)
     owner = models.ForeignKey(User, verbose_name='Владелец', on_delete=models.SET_NULL, **NULLABLE)
+
+    def get_absolute_url(self):
+        return reverse('blog:blog_detail', args=[str(self.id)])
 
     def __str__(self):
         return self.title
