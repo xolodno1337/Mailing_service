@@ -1,10 +1,12 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
 from config.settings import EMAIL_HOST_USER
-from users.forms import UserRegisterForm
+from users.forms import UserRegisterForm, UserForm
 from users.models import User
 import secrets
 
@@ -36,3 +38,28 @@ def email_verification(request, token):
     user.is_active = True
     user.save()
     return redirect(reverse('users:login'))
+
+
+class UserListView(LoginRequiredMixin, ListView):
+    model = User
+
+
+class UserDetailView(LoginRequiredMixin, DetailView):
+    model = User
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    fields = '__all__'
+    success_url = reverse_lazy('users:user_list')
+
+    def get_form_class(self):
+        user = self.request.user
+        if user.has_perm('users.can_view_users') and user.has_perm('users.can_users_is_active'):
+            return UserForm
+        raise PermissionDenied
+
+
+class UserDeleteView(LoginRequiredMixin, DeleteView):
+    model = User
+    success_url = reverse_lazy('users:user_list')

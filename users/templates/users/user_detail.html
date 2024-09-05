@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали пользователя</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-info {
+            margin-bottom: 20px;
+        }
+
+        .user-info p {
+            margin: 5px 0;
+        }
+
+        .avatar {
+            margin: 10px 0;
+        }
+
+        .actions {
+            text-align: center;
+        }
+
+        .actions a, .actions button {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px 15px;
+            color: white;
+            background-color: #007bff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .actions a:hover, .actions button:hover {
+            background-color: #0056b3;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Детали пользователя</h1>
+
+    <div class="user-info">
+        <h2>Информация о пользователе</h2>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Номер телефона:</strong> {{ user.phone }}</p>
+        <div class="avatar">
+            <strong>Аватар:</strong><br>
+            {% if user.avatar %}
+            <img src="{{ user.avatar.url }}" alt="Аватар" style="width: 100px; height: 100px; border-radius: 50%;">
+            {% else %}
+            <p>Аватар не загружен.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="{% url 'users:user_update' user.pk %}">Редактировать пользователя</a>
+
+        <form action="{% url 'users:user_delete' user.pk %}" method="GET" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="delete-button">Удалить пользователя</button>
+        </form>
+
+        <br><br>
+        <a href="{% url 'users:user_list' %}">Вернуться к списку пользователей</a>
+    </div>
+</div>
+
+</body>
+</html>
