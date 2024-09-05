@@ -72,9 +72,7 @@ class Mailing(models.Model):  # Рассылка
         verbose_name_plural = 'Рассылки'
         permissions = [
             ('can_view_mailing', 'Can view mailing'),
-            ('can_view_users', 'Can view users'),
-            ('can_block_users', 'Can block users'),
-            ('can_block_mailing', 'Can block mailing')
+            ('can_mailing_is_active', 'Can mailing is active')
         ]
 
 
