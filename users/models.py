@@ -21,7 +21,7 @@ class User(AbstractUser):  # Пользователь - тот, кто созд�
         verbose_name_plural = 'Пользователи'
         permissions = [
             ('can_view_users', 'Can view users'),
-            ('can_block_users', 'Can block users')
+            ('can_users_is_active', 'Can users is active'),
         ]
 
     def __str__(self):
