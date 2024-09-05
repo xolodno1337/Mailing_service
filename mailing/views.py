@@ -149,7 +149,7 @@ class ClientListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser or user.is_staff:
+        if user.is_superuser:
             return Client.objects.all()
         return Client.objects.filter(owner=user)
 
@@ -207,5 +207,9 @@ class ClientDeleteView(LoginRequiredMixin, DeleteView):
 
 
 def mailing_attempt_report(request):
-    attempts = MailingAttempt.objects.all().order_by('-first_send_datetime')
+    if request.user.is_superuser:
+        attempts = MailingAttempt.objects.all().order_by('-first_send_datetime')
+    else:
+        mailings = Mailing.objects.filter(owner=request.user)
+        attempts = MailingAttempt.objects.filter(mailing__in=mailings).order_by('-first_send_datetime')
     return render(request, 'mailing/report.html', {'attempts': attempts})

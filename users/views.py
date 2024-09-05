@@ -6,7 +6,8 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
 from config.settings import EMAIL_HOST_USER
-from users.forms import UserRegisterForm, UserForm
+from mailing.forms import MailingManagerForm
+from users.forms import UserRegisterForm, UserForm, UserManagerForm, UserSuperForm
 from users.models import User
 import secrets
 
@@ -46,18 +47,35 @@ class UserListView(LoginRequiredMixin, ListView):
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
+    context_object_name = 'user'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['can_view_users'] = self.request.user.is_superuser or self.request.user.has_perm('users.can_view_users')
+        return context
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     fields = '__all__'
-    success_url = reverse_lazy('users:user_list')
+    success_url = reverse_lazy('mailing:mailing_list')
 
     def get_form_class(self):
         user = self.request.user
-        if user.has_perm('users.can_view_users') and user.has_perm('users.can_users_is_active'):
+        profile_owner = self.get_object()
+        if user.is_superuser:
+            return UserSuperForm
+        elif user == profile_owner:
             return UserForm
+        elif user.has_perm('users.can_view_users') and user.has_perm('users.can_users_is_active'):
+            return UserManagerForm
+
         raise PermissionDenied
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_editing'] = True
+        return context
 
 
 class UserDeleteView(LoginRequiredMixin, DeleteView):

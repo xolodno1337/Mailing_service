@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход</title>
+    <title>{% if is_editing %}Редактирование{% else %}Вход{% endif %}</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <style>
         body {
@@ -26,11 +26,13 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="card-title text-center">Вход</h2>
-                    <form method="post">
+                    <h2 class="card-title text-center">{% if is_editing %}Редактирование{% else %}Вход{% endif %}</h2>
+                    <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            {% if is_editing %}Сохранить{% else %}Войти{% endif %}
+                        </button>
                     </form>
                 </div>
             </div>

@@ -1,3 +1,4 @@
+{% load my_tags %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -74,9 +75,13 @@
     <h1>Детали пользователя</h1>
 
     <div class="user-info">
-        <h2>Информация о пользователе</h2>
+        <h2>Информация о пользователе:</h2>
         <p><strong>Email:</strong> {{ user.email }}</p>
+
+        {% if user.phone %}
         <p><strong>Номер телефона:</strong> {{ user.phone }}</p>
+        {% endif %}
+
         <div class="avatar">
             <strong>Аватар:</strong><br>
             {% if user.avatar %}
@@ -96,7 +101,11 @@
         </form>
 
         <br><br>
-        <a href="{% url 'users:user_list' %}">Вернуться к списку пользователей</a>
+        {% if can_view_users %}
+            <a href="{% url 'users:user_list' %}">Вернуться к списку пользователей</a>
+        {% else %}
+            <a href="javascript:history.back()">Вернуться назад</a>
+        {% endif %}
     </div>
 </div>
 

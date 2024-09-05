@@ -1,5 +1,4 @@
 from django.forms import ModelForm, BooleanField
-
 from mailing.models import Mailing, Message, Client
 
 
@@ -28,10 +27,10 @@ class MailingManagerForm(StyleFormMixin, ModelForm):
 class MessageForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Message
-        fields = '__all__'
+        exclude = ('owner',)
 
 
 class ClientForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Client
-        fields = '__all__'
+        exclude = ('owner',)
