@@ -1,14 +1,34 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+
+from blog.models import Blog
 from mailing.forms import MailingForm, MessageForm, ClientForm, MailingManagerForm
 from mailing.models import Mailing, Message, Client, MailingAttempt
 
 
 def home(request):
     return render(request, 'mailing/home.html')
+
+
+@login_required
+def base(request):
+    total_mailings = Mailing.objects.filter(owner=request.user).count()
+    active_mailings = Mailing.objects.filter(owner=request.user, is_active=True).count()
+    unique_clients = Client.objects.filter(owner=request.user).values('email').distinct().count()
+    random_blog = Blog.objects.order_by('?')[:3]
+
+    context = {
+        'total_mailings': total_mailings,
+        'active_mailings': active_mailings,
+        'unique_clients': unique_clients,
+        'random_blog': random_blog,
+    }
+
+    return render(request, 'mailing/base.html', context)
 
 
 class MailingListView(LoginRequiredMixin, ListView):
