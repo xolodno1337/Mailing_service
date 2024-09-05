@@ -11,33 +11,43 @@
 {% include 'mailing/includes/navbar.html' %}
 
 <body>
-<h1>Отчет о попытках рассылок</h1>
-<table border="1">
-    <thead>
-    <tr>
-        <th>Рассылка</th>
-        <th>Дата начала</th>
-        <th>Дата окончания</th>
-        <th>Статус</th>
-        <th>Ответ сервера</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for attempt in attempts %}
-    <tr>
-        <td>{{ attempt.mailing.name_mailing }}</td>
-        <td>{{ attempt.first_send_datetime }}</td>
-        <td>{{ attempt.end_date }}</td>
-        <td>{{ attempt.status }}</td>
-        <td>{{ attempt.server_response }}</td>
-    </tr>
-    {% empty %}
-    <tr>
-        <td colspan="5">Нет данных</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+    <div class="container mt-5">
+        <h1 class="text-center">Отчет о попытках рассылок</h1>
+        <div class="table-responsive">
+            <table class="table table-bordered text-center">
+                <thead>
+                <tr>
+                    <th>Рассылка</th>
+                    <th>Дата начала</th>
+                    <th>Дата окончания</th>
+                    <th>Статус</th>
+                    <th>Ответ сервера</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for attempt in attempts %}
+                <tr>
+                    <td>{{ attempt.mailing.name_mailing }}</td>
+                    <td>{{ attempt.first_send_datetime }}</td>
+                    <td>
+                        {% if attempt.end_date %}
+                            {{ attempt.end_date }}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+                    <td>{{ attempt.status }}</td>
+                    <td>{{ attempt.server_response }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">Нет данных</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 {% include 'mailing/includes/footer.html' %}
 

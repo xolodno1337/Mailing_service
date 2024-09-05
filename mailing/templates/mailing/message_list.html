@@ -25,7 +25,7 @@
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <p class="card-text">Список сообщений: {{ message.subject_message }}</p>
+                        <p class="card-text">Тема: {{ message.subject_message }}</p>
                         <a class="btn btn-primary btn-lg" href="{% url 'mailing:message_detail' message.pk %}" role="button">Подробнее</a>
                     </div>
                 </div>
