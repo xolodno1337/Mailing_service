@@ -2,6 +2,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 from users.apps import UsersConfig
 from users.views import UserCreateView, email_verification, UserListView, UserDetailView, UserUpdateView, UserDeleteView
+from django.conf.urls.static import static
+from django.conf import settings
 
 app_name = UsersConfig.name
 
@@ -15,4 +17,4 @@ urlpatterns = [
     path('users/<int:pk>', UserDetailView.as_view(), name='user_detail'),
     path('users/update/<int:pk>/', UserUpdateView.as_view(), name='user_update'),
     path('users/delete/<int:pk>/', UserDeleteView.as_view(), name='user_delete'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
