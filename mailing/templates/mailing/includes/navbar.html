@@ -18,6 +18,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'mailing:report' %}">Отчеты рассылок</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'blog:blog_list' %}">Блог</a>
+            </li>
             {% if user.is_authenticated %}
             {% if user.is_staff or user.is_superuser %}
             <li class="nav-item">

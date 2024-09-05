@@ -1,12 +1,14 @@
+{% load static %}
 {% block content %}
 <div class="container mt-5">
-    <h2>{% if object %}Редактирование{% else %}Создание{% endif %} сообщения</h2>
+    <h2 class="text-center">{% if object %}Редактирование{% else %}Создание{% endif %} сообщения</h2>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <form class="row" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="col-md-8 offset-md-2">
             <div class="card border-primary">
                 <div class="card-header">
-                    <h5 class="mb-0">{% if object %}Редактировать сообщение{% else %}Новое сообщение{% endif %}</h5>
+                    <h5 class="mb-0 text-center">{% if object %}Редактировать сообщение{% else %}Новое сообщение{% endif %}</h5>
                 </div>
                 <div class="card-body">
                     {{ form.as_p }}
