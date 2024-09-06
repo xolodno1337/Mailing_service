@@ -115,3 +115,12 @@ APSCHEDULER_RUN_NOW_TIMEOUT = 25
 
 LOGIN_REDIRECT_URL = '/mailing/'
 LOGOUT_REDIRECT_URL = '/'
+
+CACHE_ENABLED = True
+if CACHE_ENABLED:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': os.getenv('LOCATION')
+        }
+    }
