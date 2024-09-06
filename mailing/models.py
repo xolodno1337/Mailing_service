@@ -6,9 +6,9 @@ from users.models import User
 NULLABLE = {'blank': True, 'null': True}
 
 periodicity_choices = [  # Периодичность рассылки
-    ('Раз в день', 'Раз в день'),
-    ('Раз в неделю', 'Раз в неделю'),
-    ('Раз в месяц', 'Раз в месяц'),
+    ('Ежедневно', 'Ежедневно'),
+    ('Еженедельно', 'Еженедельно'),
+    ('Ежемесячно', 'Ежемесячно'),
 ]
 status_choices = [  # Статус рассылки
     ('Создана', 'Создана'),
@@ -56,7 +56,8 @@ class Mailing(models.Model):  # Рассылка
     first_send_datetime = models.DateTimeField(default=timezone.now,
                                                verbose_name='Дата и время первой отправки рассылки')
     periodicity = models.CharField(max_length=20, choices=periodicity_choices, verbose_name='Периодичность рассылки',
-                                   default='daily', help_text='Выберите периодичность рассылки')
+                                   default='Ежедневно', help_text='Выберите периодичность рассылки')
+    end_date = models.DateTimeField(verbose_name='Дата и время окончания рассылки')
     status = models.CharField(max_length=10, choices=status_choices, verbose_name='Статус рассылки',
                               default='Создана')
     clients = models.ManyToManyField(Client, verbose_name='Клиенты', help_text='Выберите клиентов для рассылки')
@@ -80,7 +81,7 @@ class MailingAttempt(models.Model):  # Попытка рассылки
     mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, related_name='attempts',
                                 verbose_name='Рассылка')
     first_send_datetime = models.DateTimeField(default=timezone.now, verbose_name='Дата и время начала рассылки')
-    end_date = models.DateTimeField(verbose_name='Дата и время окончания рассылки', **NULLABLE)
+    end_date = models.DateTimeField(verbose_name='Дата и время окончания рассылки')
     status = models.CharField(max_length=20, choices=status_attempt, verbose_name='Статус попытки')
     server_response = models.TextField(verbose_name='Ответ почтового сервера', **NULLABLE)
 
