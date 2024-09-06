@@ -16,9 +16,15 @@ def home(request):
 
 @login_required
 def base(request):
-    total_mailings = Mailing.objects.filter(owner=request.user).count()
-    active_mailings = Mailing.objects.filter(owner=request.user, is_active=True).count()
-    unique_clients = Client.objects.filter(owner=request.user).values('email').distinct().count()
+    if request.user.is_superuser:
+        total_mailings = Mailing.objects.count()
+        active_mailings = Mailing.objects.filter(is_active=True).count()
+        unique_clients = Client.objects.values('email').distinct().count()
+    else:
+        total_mailings = Mailing.objects.filter(owner=request.user).count()
+        active_mailings = Mailing.objects.filter(owner=request.user, is_active=True).count()
+        unique_clients = Client.objects.filter(owner=request.user).values('email').distinct().count()
+
     random_blog = Blog.objects.order_by('?')[:3]
 
     context = {
