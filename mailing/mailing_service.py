@@ -58,7 +58,7 @@ def send_mail_period():
     mailings = Mailing.objects.filter(status__in=('Создана', 'Запущена'))
 
     for obj in mailings:
-        if obj.first_send_datetime < current_datetime:
+        if obj.first_send_datetime < current_datetime < obj.end_date:
             attempt = MailingAttempt.objects.filter(mailing=obj)
             if attempt.exists():
                 last_attempt = attempt.order_by('-first_send_datetime').first()
