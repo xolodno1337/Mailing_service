@@ -63,7 +63,7 @@ def send_mail_period():
             if attempt.exists():
                 last_attempt = attempt.order_by('-first_send_datetime').first()
                 current_timedelta = current_datetime - last_attempt.first_send_datetime
-                if current_timedelta <= timedelta(days=1) and obj.periodicity == 'Ежедневно':
+                if current_timedelta > timedelta(days=1) and obj.periodicity == 'Ежедневно':
                     send_mailing(obj)
                 elif current_timedelta >= timedelta(days=7) and obj.periodicity == 'Еженедельно':
                     send_mailing(obj)
