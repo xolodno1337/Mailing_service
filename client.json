@@ -38,5 +38,85 @@
         "comment": "Модельное агенство",
         "owner": 7
     }
+},
+{
+    "model": "mailing.client",
+    "pk": 5,
+    "fields": {
+        "email": "keshaomsk@mail.ru",
+        "full_name": "Сергей Федоров",
+        "comment": "Мама",
+        "owner": 7
+    }
+},
+{
+    "model": "mailing.client",
+    "pk": 6,
+    "fields": {
+        "email": "xolodnotchk@mail.ru",
+        "full_name": "Сергей Андреевич",
+        "comment": "",
+        "owner": 6
+    }
+},
+{
+    "model": "mailing.client",
+    "pk": 7,
+    "fields": {
+        "email": "plieen-azamat22@mail.ru",
+        "full_name": "Плиен Азамат",
+        "comment": "",
+        "owner": 6
+    }
+},
+{
+    "model": "mailing.client",
+    "pk": 8,
+    "fields": {
+        "email": "plakunoff9031@mail.ru",
+        "full_name": "Плакуноф Александр Дмитриеевич",
+        "comment": "",
+        "owner": 6
+    }
+},
+{
+    "model": "mailing.client",
+    "pk": 9,
+    "fields": {
+        "email": "fieroskat007@yandex.ru",
+        "full_name": "Ферит Кархан",
+        "comment": "",
+        "owner": 6
+    }
+},
+{
+    "model": "mailing.client",
+    "pk": 10,
+    "fields": {
+        "email": "irinamork841@mail.ru",
+        "full_name": "Морковкина Ирина Андреевна",
+        "comment": "",
+        "owner": 5
+    }
+},
+{
+    "model": "mailing.client",
+    "pk": 11,
+    "fields": {
+        "email": "irionmars@yandex.ru",
+        "full_name": "Мартынов Игорь Львович",
+        "comment": "главный бухгалтер компании Ирион",
+        "owner": 5
+    }
+},
+{
+    "model": "mailing.client",
+    "pk": 12,
+    "fields": {
+        "email": "ilargyss@mail.ru",
+        "full_name": "Щелкунов Андрей Андреевич",
+        "comment": "",
+        "owner": 5
+    }
 }
 ]
